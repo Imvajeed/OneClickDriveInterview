@@ -67,9 +67,9 @@ class MainViewModel(val binding: ActivityMainBinding):ViewModel() {
 
         page = 1
         binding.apply {
-            textBox1.setText("")
-            textBox2.setText("")
-            textBox3.setText("")
+            textBox1.setText(null)
+            textBox2.setText(null)
+            textBox3.setText(null)
         }
     }
 

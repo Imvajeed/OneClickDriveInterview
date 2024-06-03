@@ -121,6 +121,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:visibility="gone"
+            android:id="@+id/outputData"
             >
             <TextView
                 android:layout_width="match_parent"

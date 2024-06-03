@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -12,45 +13,46 @@ import com.example.oneclickdriveinterview.databinding.ActivityMainBinding
 import com.example.oneclickdriveinterview.viewmodel.MainViewModel
 import com.example.oneclickdriveinterview.viewmodel.MainViewModelFactory
 
+
 class MainActivity : AppCompatActivity() {
     lateinit var binding : ActivityMainBinding
-    lateinit var viewModelFactory: MainViewModelFactory
     lateinit var viewModel: MainViewModel
+    lateinit var viewModelFactory: MainViewModelFactory
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
+        viewModelFactory = MainViewModelFactory(binding)
+        viewModel = ViewModelProvider(this,viewModelFactory).get(MainViewModel::class.java)
 
+        setUi(viewModel.page)
         binding.apply {
             calculateBtn.setOnClickListener{
-                getData()
+                viewModel.getData()
+                setUi(viewModel.page)
+            }
+
+            backButton.setOnClickListener{
+                viewModel.resetPage()
+                setUi(viewModel.page)
             }
         }
 
     }
+    fun setUi(page:Int){
+        if (page == 1){
+            binding.inputData.visibility = View.VISIBLE
+            binding.outputData.visibility = View.GONE
 
-    private fun getData() {
-        binding.apply {
-            val text1 = textBox1.text.toString()
-            val text2 = textBox2.text.toString()
-            val text3 = textBox3.text.toString()
-
-            if (!text1.isBlank() && !text2.isBlank() && !text3.isBlank()){
-                var arr1 = text1.split(",")
-                var arr2 = text2.split(",")
-                var arr3 = text3.split(",")
-                Log.i("textOne","$arr1 $arr2 $arr3")
-
-                viewModelFactory = MainViewModelFactory(arr1,arr2,arr3)
-
-
-            }else{
-                Toast.makeText(
-                    this@MainActivity,
-                    "Must fill all the Fields",
-                    Toast.LENGTH_SHORT
-                ).show()
+        }else{
+            binding.inputData.visibility = View.GONE
+            binding.outputData.visibility = View.VISIBLE
+            binding.apply {
+                intersected.text = viewModel.value2
+                union.text = viewModel.value1
+                biggest.text = viewModel.value3.toString()
             }
         }
-
     }
+
+
 }

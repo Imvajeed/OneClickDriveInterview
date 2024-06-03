@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             backButton.setOnClickListener{
-                viewModel.resetPage()
+                viewModel.page = 1
                 setUi(viewModel.page)
             }
         }
@@ -42,6 +42,11 @@ class MainActivity : AppCompatActivity() {
         if (page == 1){
             binding.inputData.visibility = View.VISIBLE
             binding.outputData.visibility = View.GONE
+            binding.apply {
+                textBox1.text.clear()
+                textBox2.text.clear()
+                textBox3.text.clear()
+            }
 
         }else{
             binding.inputData.visibility = View.GONE
@@ -53,6 +58,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
 
 
 }

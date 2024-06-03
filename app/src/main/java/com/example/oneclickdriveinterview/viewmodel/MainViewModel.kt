@@ -63,15 +63,7 @@ class MainViewModel(val binding: ActivityMainBinding):ViewModel() {
 
     }
 
-    fun resetPage(){
 
-        page = 1
-        binding.apply {
-            textBox1.setText(null)
-            textBox2.setText(null)
-            textBox3.setText(null)
-        }
-    }
 
 
 
